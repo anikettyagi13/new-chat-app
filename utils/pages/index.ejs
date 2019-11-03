@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+         <style>
+            .yo{
+                font-size:20px;
+            }
+            body{
+                text-align: center
+            }
+            .btn{
+                max-width:20%;
+                display: block;
+                margin:0 auto;
+                margin-bottom:12px;
+            }
+         </style>
+        </head>
+    <body>
+        <div class="container"> 
+        <div class="jumbotron">
+            <h1 > CHAT GROUPS ASSOCIATED </h1>
+            <a class="btn btn-primary" href="addGroup">ADD GROUP</a>
+            <a class="btn btn-primary" href="createGroup">CREATE GROUP</a>
+        </div>
+        <% if(error){%>
+             <p> <%= error %></p>
+        <%}%>
+        <% if(group){group.forEach((group)=>{ %>
+             <div class="yo">
+             <a href="chat/<%= group.groupname %>" class="btn btn-info"><%= group.groupname %></a>
+             </div>
+        <%})}%>
+
+        </div>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="chat.js"></script>
+    </body>
+</html>

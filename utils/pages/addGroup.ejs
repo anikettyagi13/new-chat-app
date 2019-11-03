@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" href="styles.css">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            
+            <div class="jumbotron">ADD GROUP</div>
+            <% if(error){%>
+                <span><%= error %></span>
+            <%}%>
+            <form method="POST" action="/addGroup" class="form-group">
+            <input type="text" placeholder="groupname" name="groupname" required class="from-control">
+            <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
+        <script src="socket.io/socket.io.js"></script>
+        <script src="chat.js"></script>
+    </body>
+</html>

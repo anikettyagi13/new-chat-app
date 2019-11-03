@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+         <style>
+             body{
+                 min-height:100vh;
+                 overflow-y: scroll
+             }
+            .div{
+                max-width:40%;
+                background-color: rgba(116, 112, 112, 0.4);
+                 padding:12px;
+                 margin:6px auto;
+                 border-radius:10px;
+            }
+            .yo{
+                float:left;
+                font-weight: bold;
+                color:rgba(0,0,0,.8)
+            }
+            .yo1{
+                float:right;
+                color:rgba(100,100,100,.8)
+             }
+            #message{
+                width:100%;
+                 float:left;
+                 left:25%;
+                 position:absolute
+            } 
+            #input-message{
+                width: 50%;
+                border-radius:5px;
+            }
+         </style>   
+     </head>
+    <body>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+      <div class="container">   
+          <div class="jumbotron">   
+      <h3>groupname : </h3><h3 id="h1"><%=groupname%></h3>
+      <a href="/chat" class="btn btn-info">BACK</a>
+          </div>
+        <% chat.forEach((member)=>{ %>
+            <div class="div">
+                <span class="yo"><%=member.username%></span><span class="yo1"><%=member.time%></span>
+                <br>
+                <p><%=member.message%></p>
+            </div>
+
+        <% })%>
+        <div id="show-message" >
+
+        </div>
+        <form id="message" class="form-group" >
+            <input type="text" placeholder="message" name="groupname" id="input-message" required class="from-control">
+            <input type="submit" class="btn btn-primary" id="button">
+        </form>
+    </div>
+        <script type="text/html" id="message-template">
+              <div class="div">
+                    <span class="yo">{{username}}</span><span class="yo1">{{timestamp}}</span>
+                    <br>
+                    <p>{{message}}</p> 
+           </div>
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/chato.js"></script>
+        
+        
+    </body>
+</html>
