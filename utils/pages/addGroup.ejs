@@ -6,6 +6,18 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     <body>
+        
+            <nav class="navbar navbar-inverse ">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">GroupHub</a>
+                    </div>
+                    <div>
+                    <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/chat"> <%= user.username %> </a></li>
+                    <li><a href="/logout"> logout   </a></li>
+                </ul>
+                </div>
+            </nav>
         <div class="container">
             
             <div class="jumbotron">ADD GROUP</div>
@@ -14,10 +26,69 @@
             <%}%>
             <form method="POST" action="/addGroup" class="form-group">
             <input type="text" placeholder="groupname" name="groupname" required class="from-control">
+            <input type="password" placeholder="password" name="password" required class="from-control">
             <input type="submit" class="btn btn-primary">
         </form>
+        <br>
+        <br>
+        <br>
+        <div class="search"></div>
+        <h1 id="h1">SEARCH</h1>
+        <br>
+        <br>
+        <form class="form-group">
+        <input type="text" placeholder="search by groupname" name="search" id="srch" required class="from-control search1" autocomplete="off">
+        <input type="submit"  class="btn btn-primary">
+        <div class="render">
+
+        </div>
+        
+    </form>
     </div>
+        <script class="srch1" type="text/html">
+           
+             <p> {{error1}}  </p>
+            {{#group}}
+                <div class="yo">
+                <a href="/chat/login/{{groupname}} " class="btn btn-info groupname"> {{groupname}}</a>
+            <br>  
+            <br>  
+            </div>
+           {{/group}}
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
         <script src="chat.js"></script>
+        <script>
+            // const socket = io();
+            // var k=0;
+            const srch = document.querySelector('#srch');
+            const srch1 = document.querySelector('.srch1').innerHTML;
+            const k=[];
+            srch.addEventListener('keydown',(event)=>{
+                if(event.key.toLowerCase()=="backspace"){
+                    k.pop()
+                }else{
+                    k.push(event.key);
+                }
+                socket.emit('search',k)                 
+            })
+            socket.on('search',(foundGroups)=>{
+                if(foundGroups.length==0){
+                    let d = 'NO GROUP FOUND'
+                    var html = Mustache.render(srch1,{
+                        error1:d,
+                        group:undefined
+                    })
+                }else{
+              var html = Mustache.render(srch1,{
+                    error1:undefined,
+                    group:foundGroups
+                });
+            }
+                document.querySelector('.render').innerHTML = html;
+            })
+            console.log(k)
+        </script>
     </body>
 </html>

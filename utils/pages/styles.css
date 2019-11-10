@@ -5,6 +5,25 @@ body{
 .yo{
     max-width: 50%;
 }
-/* #button{
+
+.search{
+    width:100%;
+    height:1px;
+    background-color: rgb(158, 157, 157);
+}
+.search1{
+    width:50%;
+    border-radius: 9px;
+}
+
+.groupname{
+    margin:6px auto;
+    width:20%;
+    float: right;
+    right:20%
     
-} */
+}
+
+#h1{
+color: rgb(150, 146, 146)
+}

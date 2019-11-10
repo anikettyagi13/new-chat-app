@@ -1,16 +1,29 @@
 const mongoose= require('mongoose');
 const jwt = require('jsonwebtoken')
+
 const userSchema= mongoose.Schema({
     username:{
         type: String,
         required: true,
         trim: true,
         unique:true,
-        lowercase: true,
+        validate(value){
+            if(value!=value.toLowerCase()){
+                throw new Error('USERNAME MUST BE IN LOWERCASE')
+            }
+            if(value.includes(' ')){
+                throw new Error('CANNOT HAVE SPACES IN BETWEEN')
+            }
+        }
     },
     password:{
         type:String,
         required:true,
+        validate(value){
+            if(value.length<5){
+                throw new Error('password cannot be smaller than 6 characters'.toUpperCase())
+            }
+        }
     },
     tokens:[{
         token:{
@@ -26,10 +39,6 @@ userSchema.virtual('group',{
     localField:'_id',
     foreignField:'members.member'
 });
-
-
-
-
 
 
 userSchema.methods.genrateToken = async(user)=>{

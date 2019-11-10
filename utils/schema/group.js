@@ -6,11 +6,21 @@ const groupSchema= new mongoose.Schema({
         required:true,
         unique:true
     },
+    password:{
+        type:String,
+        required:true,
+        validate(value){
+            console.log(value)
+            if(value.length<6){
+                console.log(value)
+                throw new Error('CANNOT BE SMALLER THAN 6 CHARACTERS')
+            }
+        }
+    },
     members:[{
         member:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:'User',
-            required:true
+            ref:'User'
         },
         chat:[{
             username:{

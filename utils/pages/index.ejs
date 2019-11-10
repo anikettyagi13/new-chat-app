@@ -19,18 +19,29 @@
          </style>
         </head>
     <body>
+            <nav class="navbar navbar-inverse ">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">GroupHub</a>
+                    </div>
+                    <div>
+                    <ul class="nav navbar-nav navbar-right">
+                    <li><a> <%= user.username %> </a></li>
+                    <li><a href="/logout"> logout   </a></li>
+                </ul>
+                </div>
+            </nav>
         <div class="container"> 
         <div class="jumbotron">
             <h1 > CHAT GROUPS ASSOCIATED </h1>
-            <a class="btn btn-primary" href="addGroup">ADD GROUP</a>
-            <a class="btn btn-primary" href="createGroup">CREATE GROUP</a>
+            <a class="btn btn-primary" href="/addGroup">ADD GROUP</a>
+            <a class="btn btn-primary" href="/createGroup">CREATE GROUP</a>
         </div>
         <% if(error){%>
              <p> <%= error %></p>
         <%}%>
         <% if(group){group.forEach((group)=>{ %>
              <div class="yo">
-             <a href="chat/<%= group.groupname %>" class="btn btn-info"><%= group.groupname %></a>
+             <a href="/chat/<%= group.groupname %>" class="btn btn-info"><%= group.groupname %></a>
              </div>
         <%})}%>
 

@@ -1,16 +1,13 @@
-const bcrypt = require('bcryptjs');
+const {hash,compare} = require('../bcrypt/passhash');
 const User = require('../schema/user');
 
-const  hashPassword=(user)=>{
+const  hashPassword=async(user)=>{
 
-         bcrypt.hash(user.password,8).then(async(hashedpassword)=>{
-            console.log(hashedpassword)
+            const hashedpassword=await hash(user.password)
             user.password = hashedpassword;
             await user.save()    
-        }).catch((e)=>{ console.log(e) })
    
-        
-    }
+}
 
 const login= async(username,password)=>{
     try{const user = await User.findOne({ username:username })
@@ -18,20 +15,21 @@ const login= async(username,password)=>{
          throw new Error('NO user found!!')
     }
     else{
-    const isMatch =await bcrypt.compare(password,user.password).catch((e)=>{
-        return console.log("error from bcrypt.compare")
-    })
-    if(isMatch){
-       //************************************************************************ 
-       //************************************************************************ 
-       //************************************************************************ 
-       //************************************************************************ 
-    }
-    else{
+    const isMatch =await compare(password,user.password)
+    if(!isMatch){
         throw new Error('INCORRECT PASSWORD')
-    }}
+
+      }
+      return{
+          error:undefined,
+          isMatch
+      }
+    }
     }catch(e){
-       console.log(e);
+       return {
+           error:e,
+           isMatch:undefined
+     }
     }
 }
 
