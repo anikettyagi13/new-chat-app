@@ -68,6 +68,9 @@ app.use(bodyparser.urlencoded({ extended:true }))
 const server = http.createServer(app);
 const io = socketio(server);
 
+app.get('/',(req,res)=>{
+    res.redirect('/chat')
+})
 
 app.get('/signup',(req,res)=>{
     res.render('signup.ejs',{error:undefined})
@@ -298,6 +301,9 @@ io.on('connection',(socket)=>{
     })
 })
 
+app.get('*',(req,res)=>{
+    res.render('error.ejs',{error:'NO PAGE FOUND'})
+})
 
 server.listen(port,()=>{
     console.log("yo running");
