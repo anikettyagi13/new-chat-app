@@ -191,7 +191,7 @@ app.get('/chat/:name',auth,async(req,res)=>{
             time.push(moment(Number(chat.time)).format('lll'))
         }
     })
-    return res.render('chat.ejs',{chat:group.members[0].chat,time:time,groupname:groups.groupname,user:req.user})
+    return res.render('chat.ejs',{user:req.users,chat:group.members[0].chat,time:time,groupname:groups.groupname,user:req.user})
     }catch(e){
         
     res.render('index.ejs',{error:e,group:undefined,user:req.user})
@@ -254,7 +254,7 @@ app.post('/createGroup',auth,async(req,res)=>{
 
    if(group){
    res.redirect('/chat')
-   await users.populate({path:'group'}).execPopulate();
+   await req.users.populate({path:'group'}).execPopulate();
    }
 
 }catch(e){
@@ -266,15 +266,15 @@ app.post('/createGroup',auth,async(req,res)=>{
 io.on('connection',(socket)=>{
     console.log('Socket connection');
 
-    socket.on('message',async(inputmessage,groupname)=>{
+    socket.on('message',async(inputmessage,groupname,username)=>{
         var timestamp = new Date().getTime()
         groups= await Group.findOne({groupname:groupname});
         
-        groups.members[0].chat.push({message:inputmessage,username:users.username,time:timestamp})
+        groups.members[0].chat.push({message:inputmessage,username:username,time:timestamp})
         // groups.members[0].chat.push({username:users.username})
         // groups.members[0].chat.push({time:timestamp})
         await groups.save()
-        username= users.username
+        username= username
         groupname = groups.groupname
         io.emit('message',username,inputmessage,timestamp,groupname)
     })

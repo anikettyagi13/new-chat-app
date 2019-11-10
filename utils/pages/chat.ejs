@@ -34,6 +34,9 @@
                 width: 50%;
                 border-radius:5px;
             }
+            #jumbo{
+                margin-top:60px;
+            }
          </style>   
      </head>
     <body>
@@ -51,8 +54,9 @@
             </nav>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
       <div class="container">   
-          <div class="jumbotron">   
+          <div class="jumbotron" id="jumbo">   
       <h3>groupname : </h3><h3 id="h1"><%=groupname%></h3>
+      <h6>username : </h6><h4 id="h6"><%=user.username%></h4>
       <a href="/chat" class="btn btn-info">BACK</a>
           </div>
           <% var t=0; chat.forEach((member)=>{ %>

@@ -3,13 +3,14 @@ var messagetemplate=document.querySelector('#message-template').innerHTML
 const showMessage = document.querySelector('#show-message');
 const groupname = document.querySelector('#h1').innerHTML
 const body = document.querySelector('body')
+const username = document.querySelector('#h6').innerHTML;
 
 
 document.querySelector('#message').addEventListener('submit',(e)=>{
     e.preventDefault()
     var inputMessage = document.querySelector('#input-message').value
 
-    socket.emit('message',inputMessage,groupname)
+    socket.emit('message',inputMessage,groupname,username)
     document.querySelector('#input-message').value=""
 
 })
